@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "CustomerList";
+}
+@using ConsultancyApp.Models
+ <!-- page content -->
+    <div class="col-md-9 col-sm-6 col-xs-12">
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Customers</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+
+        <div class="x_content">
+
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Name </th>
+                            <th class="column-title">Phone </th>
+                            <th class="column-title">Email </th>
+                            <th class="column-title">No Of Cases </th>
+                            <th class="column-title">Action </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            @foreach (Customer i in Model)
+                            {
+                            <tr>
+                                <td>@i.First_Name @i.Middle_Name @i.Surname</td>
+                                <td>@i.Phone_Mobile</td>
+                                <td>@i.Email</td>
+                                <td>@i.Cases.Count</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "editCustomer", new { customerId = i.ID }, new { @class = "btn btn-sm btn-success" })
+                                <a data-toggle="modal" data-id=@i.ID title="Add this item" class="open-deleteCustomerDialog btn btn-sm btn-success" href="#deleteCustomerDialog">Delete</a>
+                            </td>  
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+<div class="col-md-3 col-md-offset-1">
+    <h3></h3>
+</div>
+<div>
+    <br/>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).on("click", ".open-deleteCustomerDialog", function () {
+        var myCustomerId = $(this).data('id');
+        $(".modal-body #customerId").val(myCustomerId);
+        // As pointed out in comments,
+        // it is superfluous to have to manually call the modal.
+        $('#deleteCustomerDialog').toggle();
+        // $('#addBookDialog').modal('show');
+    });
+</script>
+
+<div id="deleteCustomerDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("deleteCustomer", "Customer", FormMethod.Post))
+        {
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warning!!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <label for="middle-name" class="control-label">Are you sure? You want to delete this customer.</label><br />
+                    <input type="text" name="customerId" id="customerId" hidden value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+

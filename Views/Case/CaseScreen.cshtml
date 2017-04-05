@@ -1,0 +1,404 @@
+﻿
+@{
+    ViewBag.Title = "CreateAttendenceNote";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ConsultancyApp.Models.Case
+@using ConsultancyApp.Models
+
+ <style>
+    
+
+      p {
+color: #4A4A4A;
+     }
+    p, h1, h2, h4, h5, h6, h7 {
+        font-family: sans-serif;
+        font-size: 11pt;
+    }
+    .page-title button{
+        margin-left:10pt;
+    }
+    .page-title a {
+        color: white;
+        font-weight: bold;
+    }
+   </style>
+
+<script type="text/javascript">
+    function CapitalLetter (string) {
+        string = string.replace(/([a-z])([A-Z])/g, '$1 $2');
+        string = string.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+        return string;
+    }
+</script>
+
+    <div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Case Screen</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-offset-6 col-md-5 col-sm-6 col-xs-12">
+                    <div class="form-group btn-group">
+                        <button class="btn btn-sm btn-success"><a href="#">Print Case</a></button>
+                        <button class="btn btn-sm btn-success"><a href="#">Invoice</a></button>
+                        @{
+                            if (@Model.Ending_Date == null)
+                            {
+                                  <a data-toggle="modal" data-id=@Model.ID title="Add this item" class="open-closeCasDialog btn btn-sm btn-success" href="#closeCaseDialog">Close Case</a>  
+                            }
+                            else
+                            {
+                                <input type="button" class="btn btn-sm btn-success" value="Closed" disabled />
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-7 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Case Ref:</strong></p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>@Model.Displayable_ID</strong></p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        <p><strong>Status:</strong></p>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        @{
+                            if (@Model.Ending_Date == null)
+                            {
+                                <p><strong>Ongoing</strong></p>
+                            }
+                            else
+                            {
+                                 <p><strong>Closed</strong></p>
+                               
+                            }
+                        }
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Opening Date:</strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Starting_Date.Value.ToString("MM/dd/yyyy")</strong></p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Customer:</strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Customer.First_Name @Model.Customer.Middle_Name @Model.Customer.Surname</strong></p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>DOB: </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Customer.Date_Of_Birth.ToString("MM/dd/yyyy")</strong></p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Nationality:   </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Customer.Country_Of_Nationality</strong></p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Case Type:   </strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Case_Type.Type</strong></p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Case Details:     </strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Case_Detail</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Advice:   </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Advice</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Fees:   </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>$ 2000</strong></p>
+                    </div><br />
+                </div>
+            </div>
+
+            <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12">
+                <div class="panel ">
+                    <div class="panel-heading " style="background-color: #EBF6FD;">
+                        <h5 style="color: #3AA3E3;"><strong>Case Documents</strong></h5>
+
+                    </div>
+                    <div class="panel-body text-center" style="background-color: #EBF6FD; text-align:left; text-decoration:underline; padding-left:40px">
+                        @Html.ActionLink("Generate Opening Statement", "displayDocumentEditor", new { documentTypeID = 1, caseID = Model.ID }, new { target = "_blank" })<br />
+                        @Html.ActionLink("Generate Authority Letter", "displayDocumentEditor", new { documentTypeID = 2, caseID = Model.ID }, null)<br />
+                        @Html.ActionLink("Generate Closing Statement", "displayDocumentEditor", new { documentTypeID = 3, caseID = Model.ID }, null)<br />
+                        @Html.ActionLink("Generate Client Care Letter", "displayDocumentEditor", new { documentTypeID = 4, caseID = Model.ID }, null)<br />
+                    </div>
+                </div>
+                <div class="panel ">
+                    <div class="panel-heading " style="background-color: #EBF6FD;">
+                        <h5 style="color: #3AA3E3;"><b>Customer Documents</b><span class="right"><button type="button" class="btn btn-sm btn-success fa fa-plus" data-toggle="modal" data-target="#documents"> Upload</button></span></h5>
+
+                    </div>
+                    <div class="panel-body " style="text-align: left; background-color: #EBF6FD; text-decoration: underline; padding-left: 40px; ">
+                        @{
+                            //Case Documents
+                            foreach (var caseDoc in @Model.Case_Document)
+                            {
+                                if (caseDoc.IsUploaded == "1")
+                                {
+
+                                    @Html.ActionLink(caseDoc.Case_Document_Type.Type, "displayCaseDocument", new { caseDocumentID = caseDoc.ID }, new { target = "_blank" })<br />
+                                }
+                            }
+                            //Attendence note documents
+                           
+                            foreach (Case_Note cusCase in Model.Case_Note.Where(cas => cas.Case_ID == Model.ID))
+                            {
+                                 if (cusCase.Customer_Case_Note_Document.Count()>0)
+                            { 
+                               
+                            foreach (Customer_Case_Note_Document document in cusCase.Customer_Case_Note_Document.Where(cas => cas.Note_ID == cusCase.ID))
+                                 {
+                                 @Html.ActionLink(document.Name, "displayNoteDocument", new { caseNoteID = document.ID, caseId = @Model.ID }, new { target = "_blank" })<br />
+                                  
+                                }
+                            }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+        <style>
+            /* Icon when the collapsible content is shown */
+            .btn1:after {
+                font-family: "Glyphicons Halflings";
+                content: "\e114";
+                float: right;
+                margin-left: 15px;
+            }
+            /* Icon when the collapsible content is hidden */
+            .btn1.collapsed:after {
+                content: "\e080";
+            }
+            .btn-md {
+                padding: 9px 25px;
+                font-size: 12px;
+                border-radius: 10px;
+            }
+        </style>
+        <div class="row">
+            <div class="container">
+                <div class="col-md-11 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading " style="background-color: #EBF6FD;">
+                            <h5 style="color: #3AA3E3;"><b>Attendance Notes</b><span class="right">@Html.ActionLink(" Add", "addAttendanceNotes", new { caseId = Model.ID }, new { @class = "btn btn-sm btn-success fa fa-plus" })</span></h5>
+
+                        </div>
+                        <div class="panel-body" style="background-color: #EBF6FD;">
+                            <div class="form-group">
+                                <div class="x_content">
+
+
+                                    @foreach (Case_Note cusCase in Model.Case_Note.Where(cas => cas.Case_ID == Model.ID))
+                                    {
+
+                                        <div class="container">
+
+                                            <button type="button" class="btn1 btn-md btn-success collapsed" style="" data-toggle="collapse" data-target="#collape_@cusCase.ID">
+                                                @cusCase.Note_Type.Name &nbsp;&nbsp; @cusCase.Date.ToString("MM/dd/yyyy") 
+                                            </button>
+                                            <div id="collape_@cusCase.ID" class="collapse">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Date: @cusCase.Date</li>
+                                                    <li class="list-group-item">Type: @cusCase.Note_Type.Name</li>
+                                                    <li class="list-group-item">Note: @cusCase.Note</li>
+                                                   @if(cusCase.Customer_Case_Note_Document.Count()>0)
+                                                   { 
+                                                         foreach (Customer_Case_Note_Document document in cusCase.Customer_Case_Note_Document.Where(cas => cas.Note_ID == cusCase.ID))
+                                                             {
+
+                                                             <li class="list-group-item"> Link: <u>@Html.ActionLink(document.Name, "displayNoteDocument", new { caseNoteID = document.ID, caseId = @Model.ID }, null)</u> </li>
+                                                            }
+                                                         }
+                                                    <li class="list-group-item">
+                                                        Actions: &ensp;&ensp;&ensp; @Html.ActionLink("Edit", "editCaseNote", new { caseNoteId = cusCase.ID, caseId = cusCase.Case_ID }, new { @class = "btn btn-sm btn-success right" })
+                                                        &ensp;&ensp;&ensp;<a data-toggle="modal" data-id=@cusCase.ID title="Add this item" class="open-deleteCaseNoteDialog btn btn-sm btn-success" href="#deleteCaseNoteDialog">Delete</a>
+                                                       
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <br />  <br /> <br />
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+
+        <script>
+            $(document).on("click", ".open-deleteCaseNoteDialog", function () {
+                var myCaseNoteId = $(this).data('id');
+                $(".modal-body #caseNoteId").val(myCaseNoteId);
+                // As pointed out in comments,
+                // it is superfluous to have to manually call the modal.
+                $('#deleteCaseNoteDialog').toggle();
+                // $('#addBookDialog').modal('show');
+            });
+           
+            $(document).on("click", ".open-closeCasDialog", function () {
+           var myCaseId = $(this).data('id');
+           $(".modal-body #caseId").val(myCaseId);
+           // As pointed out in comments, 
+           // it is superfluous to have to manually call the modal.
+           $('#closeCaseDialog').toggle();
+           // $('#addBookDialog').modal('show');
+       });
+        </script>
+
+        <div id="deleteCaseNoteDialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                @using (Html.BeginForm("deleteCaseNote", "Case", FormMethod.Post))
+                {
+        <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Warning!</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="middle-name" class="control-label">You are about to delete an attendance note, Are you sure?</label><br />
+                            <input type="text" name="caseNoteId" id="caseNoteId" hidden value="" />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+
+    <div id="documents" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            @using (Html.BeginForm("Upload", "Case", FormMethod.Post, new { Id = "myform", enctype = "multipart/form-data" }))
+            {
+        <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Upload Document</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <label for="middle-name" class="control-label">Select Document</label><br />
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="AuthorityLetter" autocomplete="off" checked> Authority Letter
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="OpeningStatement" autocomplete="off"> Opening Statement
+                                </label><br />
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="ClientCareLetter" autocomplete="off"> Client Care Letter
+                                </label>
+
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="Passport" autocomplete="off"> Passport
+                                </label><br />
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="ClosingStatement" autocomplete="off"> Closing Statement
+                                </label>
+
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="Others" autocomplete="off"> Others
+                                </label><br />
+                            </div>
+                        </div>
+
+                        <br />
+
+
+                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.Case_Document)
+                        <input type="file" name="file" required />
+                        <br />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default right" data-dismiss="modal">Close</button>
+                            <button id="saveButton" type="submit" class="btn btn-success right">Save</button> 
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+   </div>   
+
+<div id="closeCaseDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("closeCase", "Case", FormMethod.Post))
+        {
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warning!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <label for="middle-name" class="control-label">You are about to close this case, Are you sure?</label><br />
+                    <input type="text" name="caseId" id="caseId" hidden value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

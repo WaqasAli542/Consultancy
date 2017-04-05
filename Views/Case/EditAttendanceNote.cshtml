@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Edit Attendance Note";
+}
+
+@model ConsultancyApp.Models.Case_Note
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 class="dark">Case/Edit Note</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_title">
+                    <h2>Create Case</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div data-parsley-validate class="form-horizontal form-label-left">
+                        <br />
+                        @using(Html.BeginForm("editNoteToDatabase", "Case", FormMethod.Post,new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <span class="right"><p><strong>Case Ref : </strong> </p></span>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><strong>@ViewBag.CaseID </strong></p>
+                                </div>
+                            </div>
+                            @Html.Hidden("Case_ID", (int)ViewBag.CaseID);
+                           @Html.Hidden("ID", Model.ID);
+                            
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <span class="right"><p><strong>Customer : </strong> </p></span>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><strong>@ViewBag.customerFullName</strong></p>
+                                </div>
+                            </div><br />
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" value=@ViewBag.date type="date" name="Date" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayed">
+                                    Case Type <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="noteType" class="selectpicker form-control " required>
+                                        <option class="active">@Model.Note_Type.Name</option>
+                                        @foreach (var note in ViewBag.noteType)
+                                        {
+                                            if ( !@Model.Note_Type.Name.Equals(@note.Name))
+                                            {
+                                                   <option>@note.Name</option>
+                                            }
+                                        }
+                                           
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Note</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <textarea id="middle-name" minlength="20" required class="form-control col-md-7 col-xs-12" rows="6" name="Note">@Model.Note</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Attach Document</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="file" name="file"/><br />
+                                </div>
+                            </div>
+
+
+                            <div class="ln_solid"></div>
+                            <div class="">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
+                                    @Html.ActionLink("Back", "displayCase", new { caseId = Model.Case_ID }, new { @class = "btn btn-sm btn-default" })
+                                    <button type="submit" class="btn btn-sm btn-success"> Edit</button>
+                                   
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

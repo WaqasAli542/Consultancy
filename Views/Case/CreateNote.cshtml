@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "CreateNote";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 class="dark">create Note</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12 dark" for="displayed">
+                            Note <span class="required">*</span>
+                        </label>
+                        <textarea class="form-control col-md-7 col-xs-12" rows="20" id="editor1" name="editor1"></textarea>
+
+
+                    </div>
+                    <br />
+                </div>
+                <input type="submit" class="btn btn-success" id="myCheck" value="Upload" style="margin-left:5px;"> Attached File
+                <input type="submit" class="btn btn-success" id="myCheck" value="Save Note">
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3 class="dark">To Do List</h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>

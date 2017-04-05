@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+           
+
+          
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <!-- top tiles -->
+                <div class="row tile_count">
+
+                    <div class="col-md-offset-4 col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-envelope-o"></i> Contacts</span>
+                        <div class="count green">@ViewBag.Customers</div>
+                        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-file"></i> Cases</span>
+                        <div class="count">@ViewBag.Cases</div>
+                        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+                    </div>
+                </div>
+                <!-- /top tiles -->
+
+                <div class="container-fluid">
+                
+                </div>
+                <!-- /page content -->
+              
+            </div>
+
+        </div>
+    </div>
+</body>

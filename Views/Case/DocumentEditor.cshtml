@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "CaseDocumentGenerate";
+    Layout =null;
+}
+@model ConsultancyApp.Models.Case_Document
+<nav class="navbar navbar-inverse" style="background-color: #395A80; width: 100%;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="color:white;">Consultancy App</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+</nav>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/textEdi/css/demo.css" rel="stylesheet" />
+<link href="~/Content/textEdi/css/jquery-te-1.4.0.css" rel="stylesheet" />
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+    <script src="~/Content/textEdi/js/jquery-te-1.4.0.min.js"></script>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12" >
+        <h1 style="color: black;">Document Editor</h1>
+    <div class="">
+        <form action="saveCaseDocument" method="post">
+            @Html.HiddenFor(m => m.Case_ID)
+            @Html.HiddenFor(m => m.Case_Document_Type_ID)
+            @Html.HiddenFor(m => m.IsUploaded)
+            <textarea name="textarea" class="jqte-test" cols="100" rows="100" >@Model.Text</textarea><br />
+            <input type="submit" class="btn btn-sm btn-success text-right" name="command" value="Save" style="background-color: #395A80;"  />
+            <input type="submit" class="btn btn-sm btn-success text-right" name="command" value="Download" style="background-color: #395A80;" />
+            <script src="~/Content/textEdi/js/tog.js"></script>
+            
+        </form>
+    </div>
+  </div>
+</div>

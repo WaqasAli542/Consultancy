@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48b853d6baa847dcb8d55cf9d446be42" Name="Diagram1">
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Case" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Case_Document" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Case_Document_Type" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Case_Note" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Case_Type" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Client_Staff" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Client_Staff_Todo_Notes" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Consultancy" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Customer" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Customer_Case_Note_Document" Width="1.5" PointX="7.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Invoice" Width="1.5" PointX="3.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="consultancy_DatabaseModel.Note_Type" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_Document_ToCase" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_Note_ToCase" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_ToCase_Type_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_ToClient_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_ToCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_ToINvoice" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_Document_ToCase_Document_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Case_Note_ToNote_Type_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Customer_Case_Note_Document_ToCase_Note" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Client_Staff_Todo_Notes_To_Client_staff" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Consultancy_ToClient_Staff_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Consultancy_ToCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="consultancy_DatabaseModel.FK_Consultancy_ToInvoice" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

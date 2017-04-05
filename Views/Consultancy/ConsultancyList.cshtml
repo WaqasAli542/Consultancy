@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "CustomerList";
+}
+@using ConsultancyApp.Models
+ <!-- page content -->
+    <div class="col-md-9 col-sm-6 col-xs-12">
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Consultancy List</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+
+        <div class="x_content">
+
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Customer Name </th>
+                            <th class="column-title">Period</th>
+                            <th class="column-title">Charges </th>
+                            <th class="column-title">Date </th>
+                            <th class="column-title">Action </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            @foreach (Consultancy consultancy in Model)
+                            {
+                            <tr>
+                                <td>@consultancy.Customer.First_Name @consultancy.Customer.Middle_Name @consultancy.Customer.Surname</td>
+                                <td>@consultancy.Period</td>
+                                <td>@consultancy.Invoice.Price</td>
+                                <td>@consultancy.Date</td>
+                                <td>@Html.ActionLink("Edit", "editConsultancy", new { consultancyId = consultancy.ID }, new { @class = "btn btn-sm btn-success" })
+                                    <a data-toggle="modal" data-id=@consultancy.ID title="Add this item" class="open-deleteConsultancyDialog btn btn-sm btn-success" href="#deleteConsultancyDialog">Delete</a>     </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+<div class="col-md-3 col-md-offset-1">
+    <h3></h3>
+</div>
+<div>
+    <br/>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).on("click", ".open-deleteConsultancyDialog", function () {
+        var myConsultancyId = $(this).data('id');
+        $(".modal-body #consultancyId").val(myConsultancyId);
+        // As pointed out in comments,
+        // it is superfluous to have to manually call the modal.
+        $('#deleteConsultancyDialog').toggle();
+        // $('#addBookDialog').modal('show');
+    });
+    </script>
+
+    <div id="deleteConsultancyDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("DeleteConsultancy", "Consultancy", FormMethod.Post))
+        {
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warning!!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <label for="middle-name" class="control-label">Are you sure? You want to delete this consultancy.</label><br />
+                    <input type="text" name="consultancyId" id="consultancyId" hidden value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+

@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+    <style type="text/css">
+        input {
+            padding: 30px;
+        }
+
+        .navbar-brand {
+            font-weight: bolder;
+            font-family: 'Baloo', cursive;
+        }
+    </style>
+</head>
+<body style="background-color:  rgba(0,0,0,0.1);">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" class="btn btn-default" style="padding:7px; margin-top:5px; border:2px solid black; margin-right: 5px; font-weight: bold;">Sign In</a></li>
+                    <li><a href="@Url.Action("Dashboard", "Home")" class="btn btn-default" style="padding:7px; margin-top:5px; border:2px solid black; font-weight: bold;">Sign Up</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="row">
+            <img src="Content/Images/logo2.png" class="img-responsive " style="margin-left: 40%; padding-bottom: 40px;">
+            <div class="col-md-offset-4 col-md-5 col-sm-12 col-xs-12" style="background-color:  rgba(255,255,255,1); border-top:4px solid #3AA3E3 ;  box-shadow: 1px 4px 8px rgba(0, 0, 0, .5);">
+                <h2 class="text-center">Login</h2>
+                <br>
+                <br>
+                <form role="form" action="../Home/Dashboard">
+                    <div class="form-group">
+                        <input type="email" name="name" placeholder="Email Address" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-success" style="margin-left: 190px; font-weight: bold; align-content: center; background-color: #3ac399;"><br><br>
+                    </div>
+                    <div class="form-group form-inline">
+
+                        <p class="text-left">Forget Password? <a href="Reset_Password.html"> Reset Password</a></p>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "ViewDocument";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 class="dark">Notes</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="form-group">
+                        <textarea class="form-control col-md-7 col-xs-12" rows="20" id="editor1" name="editor1"></textarea>
+
+
+                    </div>
+                    <h2>Attached Documents</h2>
+                    <br />
+                </div>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+                <span>@Html.ActionLink("Document#1", "someaction", "somecontroller", new { id = "123" }, null)</span>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3 class="dark">Creator</h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>

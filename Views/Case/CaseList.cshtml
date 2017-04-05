@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "CaseList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using ConsultancyApp.Models
+
+<script src="~/Scripts/loadingoverlay_progress.min.js"></script>
+<script src="~/Scripts/loadingoverlay.min.js"></script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Case Details</h3>
+                
+            </div>
+            <br />
+            <div class="title_right">
+                <div class="form-group">
+                    <label class="control-label .info" style="color: #3E5266;">Search by Date:</label><br />
+                    <input type="date" id="startingDate" onchange="search()" placeholder="Search for Starting Date">
+                    <input type="date" id="endingDate" onchange="search()" placeholder="Search for Ending Date" >
+                </div>
+                <div class="form-group .info">
+                    <label class="control-label" style="color: #3E5266;">Search by Customer Name:</label> &nbsp; &nbsp; &nbsp;
+                    <label class="control-label" style="color: #3E5266;">Search by Status:</label><br />
+                    <input type="text" id="customerName" onkeyup="search()" placeholder="Search for names..">
+                    &nbsp; &nbsp; &nbsp;
+                    <select id="status" onchange="search()">
+                        <option class="active">All</option>
+                        <option>Open</option>
+                        <option>Closed</option>
+                    </select>
+                </div>
+                
+                </div>
+        </div>
+        
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-9 col-sm-6 col-xs-12">
+                    <div class="x_content">
+                        <div class="table-responsive">
+                            <table id="myTable" class="table jambo_table bulk_action">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Case Ref </th>
+                                        <th class="column-title">Customer Name </th>
+                                        <th class="column-title">Status </th>
+                                        <th class="column-title">Opening Date </th>
+                                        <th class="column-title">Closing Date </th>
+                                        <th class="column-title">No of Documents </th>
+                                        <th class="column-title">Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Case i in Model)
+                                    {
+
+                                        <tr >
+                                     
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Displayable_ID</td>
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Customer.First_Name @i.Customer.Middle_Name @i.Customer.Surname</td>
+                                            @{ if (i.Ending_Date == null)
+                                             {
+                                                <td>Open</td>
+
+                                             }
+                                             else
+                                             {
+                                                <td>Closed</td>
+                                             }
+                                            }
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Starting_Date</td>
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Ending_Date</td>
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Case_Document.Count</td>
+                                            <td>
+
+
+                                                @Html.ActionLink("Edit", "editCaseView", new { caseId = i.ID }, new { @class = "btn btn-sm btn-success" })
+                                                <a data-toggle="modal" data-id=@i.ID title="Add this item" class="open-deleteCasDialog btn btn-sm btn-success" href="#deleteCaseDialog">Delete</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+              
+
+
+            </div>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
+    <script>
+        $(document).on("click", ".open-deleteCasDialog", function () {
+            var myCaseId = $(this).data('id');
+            $(".modal-body #caseId").val(myCaseId);
+            // As pointed out in comments, 
+            // it is superfluous to have to manually call the modal.
+            $('#deleteCaseDialog').toggle();
+           // $('#addBookDialog').modal('show');
+        });
+       
+        //Search
+        function search() {
+            var startingD, endingD, cName, status, splitterForS, splitterForE, filter1 = "", filter = "", filter2, filter3, table, tr, tdForStart, tdForEnd, tdForCus, tdForStatus, i;
+
+            startingD = document.getElementById("startingDate");
+            endingD = document.getElementById("endingDate");
+            cName = document.getElementById("customerName");
+            status = document.getElementById("status");
+
+
+            filter2 = cName.value.toUpperCase();
+            if (filter2.length == 0)
+                filter2 = " ";
+
+            filter3 = status.value.toUpperCase();
+            if (filter3.length == 3)
+                filter3 = "E";
+
+            if (isNaN(Date.parse(startingD.value))) {
+                filter = 12939821234;
+            } else {
+                splitterForS = startingD.value.split('-');
+                filter = filter + parseInt(splitterForS[1]) + "/";
+                filter = filter + parseInt(splitterForS[2]) + "/";
+
+                filter = Date.parse(filter + splitterForS[0]);
+            }
+
+
+            if (isNaN(Date.parse(endingD.value))) {
+                filter1 = 23489023859228394723;
+            } else {
+                splitterForE = endingD.value.split('-');
+                filter1 = filter1 + parseInt(splitterForE[1]) + "/";
+                filter1 = filter1 + parseInt(splitterForE[2]) + "/";
+                filter1 = Date.parse(filter1 + splitterForE[0]);
+            }
+
+
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                tdForStart = tr[i].getElementsByTagName("td")[3];
+                tdForEnd = tr[i].getElementsByTagName("td")[4];
+                tdForCus = tr[i].getElementsByTagName("td")[1];
+                tdForStatus = tr[i].getElementsByTagName("td")[2];
+
+                if (tdForStart) {
+                    if (Date.parse(tdForStart.innerHTML) >= filter && (isNaN(Date.parse(tdForEnd.innerHTML)) || Date.parse(tdForEnd.innerHTML) <= filter1) && tdForCus.innerHTML.toUpperCase().indexOf(filter2) > -1 && tdForStatus.innerHTML.toUpperCase().indexOf(filter3) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
+
+</div>
+
+
+<div id="deleteCaseDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+@using (Html.BeginForm("DeleteCase", "Case", FormMethod.Post))
+        {
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning!!</h4>
+            </div>
+
+            <div class="modal-body">
+                <label for="middle-name" class="control-label">Are you sure? You want to delete this case.</label><br />
+                <input type="text" name="caseId" id="caseId" hidden value="" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+                   
+                </div>
+           </div>
+
+        </div>
+        }
+    </div>
+</div>

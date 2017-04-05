@@ -1,0 +1,100 @@
+﻿<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col" style="border: 0;background-color: #395A80 ! important ;">
+            <div class="left_col scroll-view" style="background-color: #395A80 !important;">
+                <div class="navbar nav_title" style="border: 0; background-color: #395A80 !important;">
+                    <a href="index.html" class="site_title"><img src="C:\Users\aaaa\Desktop\Application\ConsultancyApp\ConsultancyApp\Content\Images\logo.png"><br> <span>Consultancy App</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <div class="profile_pic">
+                        <img src="~/Content/Images/img.jpg" class="img-circle profile_img" />
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>Uzair Aslam</h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br />
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <ul class="nav side-menu">
+                            <li>
+                                <a><i class="glyphicon glyphicon-home"></i> &nbsp;Dashboard <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="index.html">Dashboard</a></li>
+                                    <li><a href="index2.html">Dashboard2</a></li>
+                                    <li><a href="index3.html">Dashboard3</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="glyphicon glyphicon-envelope"></i> &nbsp;Contacts <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>@Html.ActionLink("Add Customer", "createCustomer", "Customer", null, null)</li>
+                                    <li>@Html.ActionLink("Customer List", "", "Customer", null, null)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="glyphicon glyphicon-user"></i> &nbsp;Consultancy <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>@Html.ActionLink("Add Consultancy", "CreateConsultancy", "Consultancy", null, null)</li>
+                                    <li>@Html.ActionLink("Consultancy List", "", "Consultancy", null, null)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="glyphicon glyphicon-file"></i> &nbsp;Cases <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li>@Html.ActionLink("Add Case", "createCase", "Case", null, null)</li>
+                                    <li>@Html.ActionLink("Case List", "", "Case", null, null)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="glyphicon glyphicon-list-alt"></i> &nbsp;Invoices <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+                                    <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="glyphicon glyphicon-stats"></i> &nbsp;Reports <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="e_commerce.html">E-commerce</a></li>
+                                    <li><a href="projects.html">Projects</a></li>
+                                    <li><a href="project_detail.html">Project Detail</a></li>
+                                    <li><a href="contacts.html">Contacts</a></li>
+                                    <li><a href="profile.html">Profile</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="menu_section">
+                        <hr>
+                        <ul class="nav side-menu">
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Manage Staff <span class="fa fa-chevron-down"></a>
+                                <ul class="nav child_menu">
+                                    <li>
+                                        <a href="Create_Staff_member.html" style="font-weight: bold; padding: 5px;"> Create New Staff Member</a>
+                                    </li>
+                                    <li>
+                                        <a href="List_Of_Member.html" style="font-weight: bold; padding: 5px;"> View List Of Staff Members</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- /sidebar menu -->
+                <!-- /menu footer buttons -->
+                <!-- /menu footer buttons -->
+            </div>
+        </div>

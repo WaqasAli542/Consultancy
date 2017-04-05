@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Edit Case";
+}
+@model ConsultancyApp.Models.Case
+
+<script src="~/Scripts/countries3.js"></script>
+<script type="text/javascript">
+    function test() {
+
+        $.ajax({
+            dataType: "json",
+            type: "GET",
+            url: '@Url.Action("getNationality", "Case")',
+            contentType: "application/json; charset=utf-8",
+            data: { customerId: parseInt( $('#Customer_ID').val() ) },
+            success: function (response) { $('#nationality').val(response); },
+            error: function (response) { alert(response ); }
+
+        });
+
+    }
+
+
+
+
+</script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 class="dark">Case/Edit Case</h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_title">
+                    <h2>Create Case</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" action="..\Case\updateCase" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayed">
+                                Select Customer <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="Customer_ID" id="Customer_ID" onchange="test()" class="selectpicker form-control " required="required">
+                                    <option class="active" selected disabled value="@Model.Customer_ID">@Model.Customer.First_Name</option>
+
+                                    @foreach (var customer in ViewBag.Customer)
+                                    {
+                                        <option value="@customer.ID">@customer.First_Name</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> Starting Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="date" value=@ViewBag.startingdate class="form-control col-md-7 col-xs-12" type="date" name="Starting_Date" required="required">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> Ending Date </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="date" value=@ViewBag.endingDate class="form-control col-md-7 col-xs-12" type="date" name="Ending_Date" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nationality</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" value=@Model.Customer.Country_Of_Nationality required="required" class="form-control" id="nationality" name="nationality" readonly />
+                            </div>
+                            <script language="javascript">print_country("nationality");</script>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayed">
+                                Case Type <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select required="required" name="Case_Type_ID" class="selectpicker form-control ">
+                                    <option selected disabled value="@Model.Case_Type_ID" class="active">@Model.Case_Type.Type</option>
+                                    @foreach (var casetype in ViewBag.caseType)
+                                    {
+                                        <option value="@casetype.ID">@casetype.Type</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Case Details</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea id="middle-name" class="form-control col-md-7 col-xs-12" minlength="20" rows="6" name="case_Detail" required="required">@Model.Case_Detail</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Advice</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea id="middle-name" class="form-control col-md-7 col-xs-12" minlength="20" rows="6" name="advice" required="required">@Model.Advice</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fees</label>
+                            <div class="col-md-4 col-sm-3 col-xs-12">
+                                <input id="middle-name" class="form-control col-md-7 col-xs-12" value="2000" oninput="this.value=this.value.replace(/[^0-9]/g,'');" pattern=".{1,}" type="text" name="price" required="required">
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-12">
+                                <select required="required" class="selectpicker form-control ">
+                                    <option class="active" selected disabled value="">Dollar</option>
+    
+                                    <option>euro</option>
+                                    <option>CAD</option>
+                                    <option>GBP</option>
+                                    <option>AUD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(m=>m.ID)
+                        @Html.HiddenFor(m => m.Client_Staff_ID)
+                        @Html.HiddenFor(m => m.Displayable_ID)
+                        @*-----------------------------HARD CODED BARCODE-------------------*@
+                        @Html.Hidden("Barcode"," ")
+                        @Html.HiddenFor(m=>m.Invoice_ID)
+                        <div class="ln_solid"></div>
+                        <div class="">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
+                                <button type="submit" class="btn btn-sm btn-success ">Save Case</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
