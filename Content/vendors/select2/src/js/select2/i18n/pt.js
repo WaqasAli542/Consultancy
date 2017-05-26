@@ -1,5 +1,5 @@
 define(function () {
-  // European Portuguese
+  // european Portuguese
   return {
     errorLoading: function () {
       return 'Os resultados não puderam ser carregados.';

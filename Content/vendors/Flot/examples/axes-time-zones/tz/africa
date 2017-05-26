@@ -434,7 +434,7 @@ Zone	Africa/Monrovia	-0:43:08 -	LMT	1882
 #
 # From Tim Parenti (2012-11-11):
 # Treat the 2012-11-10 change as a zone change from UTC+2 to UTC+1.
-# The DST rules planned for 2013 and onward roughly mirror those of Europe
+# The DST rules planned for 2013 and onward roughly mirror those of europe
 # (either two days before them or five days after them, so as to fall on
 # lastFri instead of lastSun).
 
@@ -525,10 +525,10 @@ Zone Africa/Nouakchott	-1:03:48 -	LMT	1912
 # given, but it is probably at either 2 or 3 wall clock time).
 #
 # A little strange though, since the article says that they moved the date
-# to align itself with Europe and USA which also change time on that date,
+# to align itself with europe and USA which also change time on that date,
 # but that means they have not paid attention to what happened in
 # USA/Canada last year (DST ends first Sunday in November). I also wonder
-# why that they end on a Friday, instead of aligning with Europe which
+# why that they end on a Friday, instead of aligning with europe which
 # changes two days later.
 
 # From Alex Krivenyshev (2008-07-11):
@@ -554,7 +554,7 @@ Zone Africa/Nouakchott	-1:03:48 -	LMT	1912
 # 4. ...Cabinet has agreed to the introduction into the National Assembly
 # of the Time Bill which provides for the introduction of summer time in
 # Mauritius. The summer time period which will be of one hour ahead of
-# the standard time, will be aligned with that in Europe and the United
+# the standard time, will be aligned with that in europe and the United
 # States of America. It will start at two o'clock in the morning on the
 # last Sunday of October and will end at two o'clock in the morning on
 # the last Sunday of March the following year. The summer time for the
@@ -931,7 +931,7 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
 # We have no info about their time zone histories.
 #
 # Bassas da India - uninhabited
-# Europa Island - inhabited from 1905 to 1910 by two families
+# europa Island - inhabited from 1905 to 1910 by two families
 # Glorioso Is - inhabited until at least 1958
 # Juan de Nova - uninhabited
 # Tromelin - inhabited until at least 1958

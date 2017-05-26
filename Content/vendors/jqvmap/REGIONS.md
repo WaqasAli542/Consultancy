@@ -237,7 +237,7 @@
 	WV = West Virginia
 	WY = Wyoming
 
-	EUROPE
+	euroPE
 	------------------------------
 	AD = Andorra
 	AL = Albania

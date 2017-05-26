@@ -3,7 +3,7 @@
         <div class="col-md-3 left_col" style="border: 0;background-color: #395A80 ! important ;">
             <div class="left_col scroll-view" style="background-color: #395A80 !important;">
                 <div class="navbar nav_title" style="border: 0; background-color: #395A80 !important;">
-                    <a href="index.html" class="site_title"><img src="C:\Users\aaaa\Desktop\Application\ConsultancyApp\ConsultancyApp\Content\Images\logo.png"><br> <span>Consultancy App</span></a>
+                    <a href="index.html" class="site_title"><img src="~/Content/Images/logo.jpg" width="150px" height="50px"><br> <span>Consultancy App</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -35,7 +35,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a><i class="glyphicon glyphicon-envelope"></i> &nbsp;Contacts <span class="fa fa-chevron-down"></span></a>
+                                <a><i class="glyphicon glyphicon-envelope"></i> &nbsp;Customer <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li>@Html.ActionLink("Add Customer", "createCustomer", "Customer", null, null)</li>
                                     <li>@Html.ActionLink("Customer List", "", "Customer", null, null)</li>
@@ -65,11 +65,9 @@
                             <li>
                                 <a><i class="glyphicon glyphicon-stats"></i> &nbsp;Reports <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="e_commerce.html">E-commerce</a></li>
-                                    <li><a href="projects.html">Projects</a></li>
-                                    <li><a href="project_detail.html">Project Detail</a></li>
-                                    <li><a href="contacts.html">Contacts</a></li>
-                                    <li><a href="profile.html">Profile</a></li>
+                                    <li>@Html.ActionLink("Customer Case List", "CustomerCases", "Reports", null, null)</li>
+                                    <li>@Html.ActionLink("Case List", "ClientCases", "Reports", null, null)</li>
+                                   
                                 </ul>
                             </li>
                         </ul>

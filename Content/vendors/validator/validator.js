@@ -171,7 +171,7 @@ var validator = (function($){
             }
             return true;
         },
-        // Date is validated in European format (day,month,year)
+        // Date is validated in european format (day,month,year)
         date : function(a){
             var day, A = a.split(/[-./]/g), i;
             // if there is native HTML5 support:

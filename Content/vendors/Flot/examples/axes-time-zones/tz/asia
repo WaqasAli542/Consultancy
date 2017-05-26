@@ -33,7 +33,7 @@
 # Corrections are welcome!
 #	     std  dst
 #	     LMT	Local Mean Time
-#	2:00 EET  EEST	Eastern European Time
+#	2:00 EET  EEST	Eastern european Time
 #	2:00 IST  IDT	Israel
 #	3:00 AST  ADT	Arabia*
 #	3:30 IRST IRDT	Iran
@@ -663,8 +663,8 @@ Zone	Asia/Nicosia	2:13:28 -	LMT	1921 Nov 14
 # IATA SSIM (1998-09) has Cyprus using EU rules for the first time.
 
 # Classically, Cyprus belongs to Asia; e.g. see Herodotus, Histories, I.72.
-# However, for various reasons many users expect to find it under Europe.
-Link	Asia/Nicosia	Europe/Nicosia
+# However, for various reasons many users expect to find it under europe.
+Link	Asia/Nicosia	europe/Nicosia
 
 # Georgia
 # From Paul Eggert (1994-11-19):
@@ -680,12 +680,12 @@ Link	Asia/Nicosia	Europe/Nicosia
 #
 # From the BBC via Joseph S. Myers (2004-06-27):
 #
-# Georgia moved closer to Western Europe on Sunday...  The former Soviet
+# Georgia moved closer to Western europe on Sunday...  The former Soviet
 # republic has changed its time zone back to that of Moscow.  As a result it
 # is now just four hours ahead of Greenwich Mean Time, rather than five hours
 # ahead.  The switch was decreed by the pro-Western president of Georgia,
 # Mikhail Saakashvili, who said the change was partly prompted by the process
-# of integration into Europe.
+# of integration into europe.
 
 # From Teimuraz Abashidze (2005-11-07):
 # Government of Georgia ... decided to NOT CHANGE daylight savings time on
@@ -1006,10 +1006,10 @@ Zone	Asia/Baghdad	2:57:40	-	LMT	1890
 #
 # JST  Jerusalem Standard Time [Danny Braniss, Hebrew University]
 # IZT  Israel Zonal (sic) Time [Prof. Haim Papo, Technion]
-# EEST Eastern Europe Standard Time [used by almost everyone else]
+# EEST Eastern europe Standard Time [used by almost everyone else]
 #
 # Since timezones should be called by country and not capital cities,
-# I ruled out JST.  As Israel is in Asia Minor and not Eastern Europe,
+# I ruled out JST.  As Israel is in Asia Minor and not Eastern europe,
 # EEST was equally unacceptable.  Since "zonal" was not compatible with
 # any other timezone abbreviation, I felt that 'IST' was the way to go
 # and, indeed, it has received almost universal acceptance in timezone

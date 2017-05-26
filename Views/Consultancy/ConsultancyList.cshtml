@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "CustomerList";
+    ViewBag.Title = "ConsultancyList";
 }
 @using ConsultancyApp.Models
  <!-- page content -->
@@ -10,14 +10,22 @@
             <div class="title_left">
                 <h3>Consultancy List</h3>
             </div>
+            <div class="title_right">
+                <div class="form-group">
+                    <label class="control-label" style="color: #3E5266;">Search by Customer Name:</label> &nbsp; &nbsp; &nbsp;
+                    <input type="text" id="customerName" onkeyup="search()" placeholder="Search for names..">
+                    &nbsp; &nbsp; &nbsp;
+                </div>
+                <div class="form-group">
+                    &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;<label class="control-label .info" style="color: #3E5266;">Search by Date:</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="date" id="date" onchange="search()" placeholder="Search for Starting Date">
+                </div>
+            </div>
         </div>
 
         <div class="clearfix"></div>
-
-
         <div class="x_content">
-
-            <div class="table-responsive">
+            <div id="myTable" class="table-responsive">
                 <table class="table table-striped jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
@@ -26,21 +34,41 @@
                             <th class="column-title">Charges </th>
                             <th class="column-title">Date </th>
                             <th class="column-title">Action </th>
-                        </tr>
+                       </tr>
                     </thead>
 
                     <tbody>
-                            @foreach (Consultancy consultancy in Model)
-                            {
+                        @foreach (Consultancy consultancy in Model)
+                        {
                             <tr>
                                 <td>@consultancy.Customer.First_Name @consultancy.Customer.Middle_Name @consultancy.Customer.Surname</td>
                                 <td>@consultancy.Period</td>
-                                <td>@consultancy.Invoice.Price</td>
-                                <td>@consultancy.Date</td>
-                                <td>@Html.ActionLink("Edit", "editConsultancy", new { consultancyId = consultancy.ID }, new { @class = "btn btn-sm btn-success" })
-                                    <a data-toggle="modal" data-id=@consultancy.ID title="Add this item" class="open-deleteConsultancyDialog btn btn-sm btn-success" href="#deleteConsultancyDialog">Delete</a>     </td>
-                            </tr>
+                                <td>
+
+                                    @{
+                            if (string.Equals(@consultancy.Invoice.Currency_Symbol, "USD", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <p>$ @consultancy.Invoice.Price</p>
                             }
+                            else if (string.Equals(@consultancy.Invoice.Currency_Symbol, "Euro", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <p>€ @consultancy.Invoice.Price</p>
+                            }
+                            else if (string.Equals(@consultancy.Invoice.Currency_Symbol, "GBP", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <p>£ @consultancy.Invoice.Price</p>
+                            }
+
+                                    }
+
+                                </td>
+                                <td>@consultancy.Date.ToString("MM-dd-yyyy")</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "editConsultancy", new { consultancyId = consultancy.ID }, new { @class = "btn btn-sm btn-success" })
+                                <a data-toggle="modal" data-id=@consultancy.ID title="Add this item" class="open-deleteConsultancyDialog btn btn-sm btn-success" href="#deleteConsultancyDialog">Delete</a>
+                            </td>
+                        </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -68,6 +96,44 @@
         $('#deleteConsultancyDialog').toggle();
         // $('#addBookDialog').modal('show');
     });
+
+    function search() {
+        var cName, date, filter = "", filter2 = "", splitter, i, table, tr, tdForCus, td_date;
+        cName = document.getElementById("customerName");
+        date = document.getElementById("date");
+        filter = cName.value.toUpperCase();
+        if (filter.length == 0)
+            filter = " ";
+
+        if (isNaN(Date.parse(date.value))) {
+            filter2 = 12;
+        } else {
+            splitter = date.value.split('-');
+            filter2 = filter2 + parseInt(splitter[1]) + "-";
+            filter2 = filter2 + parseInt(splitter[2]) + "-";
+            filter2 = Date.parse(filter2 + splitter[0]);
+        }
+
+
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdForCus = tr[i].getElementsByTagName("td")[0];
+            td_date = tr[i].getElementsByTagName("td")[3];
+
+            if (tdForCus) {
+                var test = Date.parse(td_date.innerHTML);
+
+                if (tdForCus.innerHTML.toUpperCase().indexOf(filter) > -1 && (filter2 == 12 || Date.parse(td_date.innerHTML) == filter2)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+
+            }
+        }
+    }
     </script>
 
     <div id="deleteConsultancyDialog" class="modal fade" role="dialog">
@@ -78,11 +144,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Warning!!</h4>
+                    <h4 class="modal-title">Warning!</h4>
                 </div>
 
                 <div class="modal-body">
-                    <label for="middle-name" class="control-label">Are you sure? You want to delete this consultancy.</label><br />
+                    <label for="middle-name" class="control-label">You are about to delete a consultancy record, Are you sure?</label><br />
                     <input type="text" name="consultancyId" id="consultancyId" hidden value="" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Clent Case List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="right_col" role="main">
+    <div class="col-md-12">
+        <div class="page-title">
+            <div class="title_left">
+                <h4> Case List </h4>
+            </div>
+        </div>
+    </div>
+    <form action="ClientCaseList" method="post">
+        <div class="row">
+
+            <div class="col-md-offset-2 col-md-4" style="background-color:grey;">
+                <h4 style="color:white;"><strong>Search by Date:</strong></h4>
+                <div class="form-group form-inline">
+                    To:<input type="date" name="startingDate" class="form-control" />
+                    From:<input type="date" name="endingDate" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="form-group form-inline">
+                    <div class="col-md-4">
+                        <input type="checkbox" name="Opening" />  Missing Opening Statement
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="Authority" /> Missing Authority Letter
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="form-group form-inline">
+                    <div class="col-md-4">
+                        <input type="checkbox" name="Client" /> Missing Client Care
+                    </div>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="Closing" /> Missing Closing Statement
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4">
+                <div class="form-group form-inline">
+                    <label class="control-label">Invoice &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <select name="invoice" class="form-control">
+                        <option class="active">Paid</option>
+                        <option>Unpaid</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <label class="control-label">Advisor Name:</label>
+                    <select name="advisor" class="form-control">
+                        <option>Aslam</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-5">
+                <input type="submit" value="Submit" class="btn btn-success btn-lg">
+            </div>
+        </div>
+    </form>
+</div>
+

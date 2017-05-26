@@ -1,0 +1,185 @@
+﻿@{
+    ViewBag.Title = "Payment";
+}
+@model ConsultancyApp.Models.Case
+@using ConsultancyApp.Models
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <p><strong>Case Ref#:</strong><strong>@Model.Displayable_ID/Client:@Model.Client_Staff_ID</strong></p>
+            </div>
+            <div class="title_right">
+                <div class=" col-md-3 col-sm-3 col-xs-6">
+
+                    <p><strong>Status:</strong><strong style="color:red">@Model.Invoice.Status</strong></p>
+
+                </div>
+                <div class="col-md-offset-3 col-md-5 col-sm-6 col-xs-12">
+                    <div class="form-group btn-group">
+                        @Html.ActionLink("Print", "DetailedInvoice", "Invoice", new { caseId = Model.ID }, new { @class = "btn btn-sm btn-success" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-offset-3 col-md-5 col-sm-6 col-xs-12">
+            <h1>Invoice</h1><br /><br />
+        </div>
+        <div class="container">
+            <div class="col-md-7 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="col-md-offset-10 col-md-1 col-sm-3 col-xs-3">
+                        <img height="50px" width="50dp" src="@Model.Client_Staff.Client.Company_Logo" />
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-2 col-sm-3 col-xs-3">
+                        <p><strong>   Bill To:</strong></p>
+                        <p><strong>@Model.Customer.First_Name @Model.Customer.Middle_Name</strong> <br />@Model.Customer.Address</p>
+                    </div>
+                    <div class="col-md-offset-8 col-md-2 col-sm-3 col-xs-3">
+                        <p><strong> @Model.Client_Staff.Client.Business_Name </strong><br /> @Model.Client_Staff.Client.Address</p>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-2 col-sm-3 col-xs-3">
+                        <p><strong> # inv-@Model.Invoice_ID</strong></p>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Invoice Date:@Model.Starting_Date.Value.ToString("MM/dd/yyyy")</strong></p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title">Item Details </th>
+                                    <th class="column-title">Amount </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var remaining = 0.0;
+                                    if(Model.Invoice.IsVAT==1)
+                                    {
+                                        remaining = Model.Invoice.Price + Model.Invoice.Price * .20;
+                                       
+                                    }
+                                    else
+                                    {
+                                        remaining = Model.Invoice.Price;  
+                                    }
+                                    <tr>
+                                        <td>Legal Service for CaseRef: @Model.Displayable_ID/Client:@Model.Client_Staff_ID</td>
+                                        <td>@Model.Invoice.Currency_Symbol @remaining</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              
+            </div>
+            <br/>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <p><strong>Payment History</strong></p>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title">Date </th>
+                                    <th class="column-title">Amount Paid</th>
+                                    <th class="column-title">Payment Method </th>
+                                    <th class="column-title">Remaining Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                   
+                                    foreach(Sub_Invoice inv in @Model.Invoice.Sub_Invoice.ToList())
+                                    {
+                                        remaining = remaining - @inv.Amount;
+                                         <tr>
+                                        <td>@inv.Date.Value.ToString("MM/dd/yyyy")</td>
+                                        <td>@inv.Invoice.Currency_Symbol @inv.Amount</td>
+                                        <td>@inv.Payment_Type.Type</td>
+                                        <td>@inv.Invoice.Currency_Symbol @Math.Round(remaining, 1, MidpointRounding.AwayFromZero)</td>
+                                      </tr>
+                                    }
+                                    
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            @if(Model.Invoice.Status.Equals("Unpaid"))
+            { 
+            <div class="x_content">
+                <div class="col-md-offset-2 ">
+                    <div style="width:40%; height:30%; border:solid 2px black;">
+                        <form method="post" action="saveSubInvoice">
+                            <div class=" form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date:</label>
+                                <div class="col-md-5">
+                                    <input name="Date" required type="date" class="form-control" />
+                                </div>
+                            </div> 
+                            <div class="x_content">
+                                <div class=" form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Amount:</label>
+                                    <div class="col-md-5">
+                                        <input name="Amount" required step=".1" min=".1" max="@Math.Round(remaining, 1, MidpointRounding.AwayFromZero)" type="number" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x_content">
+                                <div class=" form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment Method:</label>
+                                    <div class="col-md-5">
+                                        <select name="Payment_TypeId" class="form-control">
+                                            @foreach (Payment_Type p in ViewBag.PaymentTypes)
+                                            { 
+                                            <option value="@p.ID" >@p.Type</option>
+                                            }
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x_content">
+                                <div class=" form-group col-md-offset-3 col-md-5">
+                                    <input type="submit" class="btn btn-success btn-sm" value="Receive Payment" />
+                                </div>
+                            </div>
+                            @Html.HiddenFor(m => m.Invoice_ID)
+                            <input type="text" name="CaseID" hidden value="@Model.ID"/>
+</form>
+                    </div>
+                </div>
+            </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+

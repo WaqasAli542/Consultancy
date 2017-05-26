@@ -17628,8 +17628,8 @@ window.disk_usage_tree =
                     },
                     {
                         "value": 28,
-                        "name": "Eurobraille.brailledriver",
-                        "path": "ScreenReader/BrailleDrivers/Eurobraille.brailledriver"
+                        "name": "eurobraille.brailledriver",
+                        "path": "ScreenReader/BrailleDrivers/eurobraille.brailledriver"
                     },
                     {
                         "value": 28,
@@ -20336,13 +20336,13 @@ window.disk_usage_tree =
             },
             {
                 "value": 0,
-                "name": "CentralEuropean Encodings.bundle",
-                "path": "TextEncodings/CentralEuropean Encodings.bundle",
+                "name": "Centraleuropean Encodings.bundle",
+                "path": "TextEncodings/Centraleuropean Encodings.bundle",
                 "children": [
                     {
                         "value": 0,
                         "name": "Contents",
-                        "path": "TextEncodings/CentralEuropean Encodings.bundle/Contents"
+                        "path": "TextEncodings/Centraleuropean Encodings.bundle/Contents"
                     }
                 ]
             },

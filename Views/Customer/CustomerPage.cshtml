@@ -1,0 +1,396 @@
+﻿@{
+    ViewBag.Title = "CreateAttendenceNote";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ConsultancyApp.Models.Customer
+@using ConsultancyApp.Models
+
+<style>
+    p {
+        color: #4A4A4A;
+    }
+
+    p, h1, h2, h4, h5, h6, h7 {
+        font-family: sans-serif;
+        font-size: 11pt;
+    }
+
+    .page-title button {
+        margin-left: 10pt;
+    }
+
+    .page-title a {
+        color: white;
+        font-weight: bold;
+    }
+</style>
+
+<script type="text/javascript">
+    function CapitalLetter(string) {
+        string = string.replace(/([a-z])([A-Z])/g, '$1 $2');
+        string = string.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+        return string;
+    }
+</script>
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Customer Details</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-offset-6 col-md-5 col-sm-6 col-xs-12">
+                    <div class="form-group btn-group">
+              
+                        @Html.ActionLink("Edit Customer", "editCustomer", new { customerId = @Model.ID }, new { @class = "btn btn-sm btn-success" })
+                        &ensp;<a data-toggle="modal" data-id=1 title="Add this item" class="open-deleteCaseNoteDialog btn btn-sm btn-success" href="#customerNote">Customer Note</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-7 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Customer First Name:</strong></p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p>@Model.First_Name</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        <p><strong>Middle Name:</strong></p>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                       
+                            @if(Model.Middle_Name != null)
+                            {
+                           <p>  @Model.Middle_Name</p>
+
+                            }
+                            else
+                            {
+                            <p> No Middle name provided. </p>
+                            }
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Last Name:</strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Surname</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong> Date of Birth: </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Date_Of_Birth.ToString("MM/dd/yyyy")</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Address: </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Address</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Nationality:   </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Country_Of_Nationality</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Visa Expiry Date :   </strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Visa_Expiry_Date</p>
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Office Number:     </strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                    @if (Model.Phone_Work != null) { 
+                        <p>@Model.Phone_Work</p>
+                    }
+                    else
+                    {
+                        <p> Not provided</p>
+                    }
+                    </div><br />
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Cell Phone Number :   </strong></p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p>@Model.Phone_Mobile</p>
+                    </div><br />
+                    <br />
+                </div>
+            </div>
+
+    
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+        <style>
+            /* Icon when the collapsible content is shown */
+            .btn1:after {
+                font-family: "Glyphicons Halflings";
+                content: "\e114";
+                float: right;
+                margin-left: 15px;
+            }
+            /* Icon when the collapsible content is hidden */
+            .btn1.collapsed:after {
+                content: "\e080";
+            }
+
+            .btn-md {
+                padding: 9px 25px;
+                font-size: 12px;
+                border-radius: 10px;
+            }
+        </style>
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Customer Cases</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-offset-6 col-md-5 col-sm-6 col-xs-10">
+                    <div class="form-group btn-group">
+                        @Html.ActionLink("Add New Case", "..//Case//Add", new { customerId = @Model.ID }, new { @class = "btn btn-sm btn-success" })
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="col-md-11 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading " style="background-color: #EBF6FD;">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table">
+                                    <thead>
+                                        <tr class="headings" style="color: #3AA3E3;">
+                                         
+                                            <th class="column-title">Status </th>
+                                            <th class="column-title">Opening Date </th>
+                                            <th class="column-title">Closing Date </th>
+                                            <th class="column-title">No of Documents </th>
+                                            <th class="column-title">Action </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Case i in Model.Cases.ToList())
+                                        {
+
+                                            <tr>
+
+                                                @{ if (i.Ending_Date == null)
+                                                 {
+                                                    <td>Open</td>
+
+                                                 }
+                                                 else
+                                                 {
+                                                    <td>Closed</td>
+                                                 }
+                                                }
+                                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Starting_Date</td>
+                                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Ending_Date</td>
+                                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Case_Document.Count</td>
+                                                <td>
+
+
+                                                    @Html.ActionLink("Edit", "..//Case//editCaseView", new { caseId = i.ID }, new { @class = "btn btn-sm btn-success" })
+                                                    <a data-toggle="modal" data-id=@i.ID title="Add this item" class="open-deleteCasDialog btn btn-sm btn-success" href="#deleteCaseDialog">Delete</a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                           </tbody> 
+                            </table></div>
+
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <script>
+        $(document).on("click", ".open-deleteCaseNoteDialog", function () {
+            var myCaseNoteId = $(this).data('id');
+            $(".modal-body #caseNoteId").val(myCaseNoteId);
+            // As pointed out in comments,
+            // it is superfluous to have to manually call the modal.
+            $('#deleteCaseNoteDialog').toggle();
+            // $('#addBookDialog').modal('show');
+        });
+
+        $(document).on("click", ".open-closeCasDialog", function () {
+            var myCaseId = $(this).data('id');
+            $(".modal-body #caseId").val(myCaseId);
+            // As pointed out in comments,
+            // it is superfluous to have to manually call the modal.
+            $('#closeCaseDialog').toggle();
+            // $('#addBookDialog').modal('show');
+        });
+    </script>
+
+    <div id="deleteCaseNoteDialog" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            @using (Html.BeginForm("deleteCaseNote", "Case", FormMethod.Post))
+            {
+        <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Warning!</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <label for="middle-name" class="control-label">You are about to delete an attendance note, Are you sure?</label><br />
+                        <input type="text" name="caseNoteId" id="caseNoteId" hidden value="" />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+    <div id="documents" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            @using (Html.BeginForm("Upload", "Case", FormMethod.Post, new { Id = "myform", enctype = "multipart/form-data" }))
+            {
+        <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Upload Document</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <label for="middle-name" class="control-label">Select Document</label><br />
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="AuthorityLetter" autocomplete="off" checked> Authority Letter
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="OpeningStatement" autocomplete="off"> Opening Statement
+                                </label><br />
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="ClientCareLetter" autocomplete="off"> Client Care Letter
+                                </label>
+
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="Passport" autocomplete="off"> Passport
+                                </label><br />
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                &nbsp;&nbsp;&nbsp; <label class=" active">
+                                    <input type="radio" name="document" value="ClosingStatement" autocomplete="off"> Closing Statement
+                                </label>
+
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6">
+                                <label class="">
+                                    <input type="radio" name="document" value="Others" autocomplete="off"> Others
+                                </label><br />
+                            </div>
+                        </div>
+
+                        <br />
+
+
+                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.Address)
+                        <input type="file" name="file" required />
+                        <br />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default right" data-dismiss="modal">Close</button>
+                            <button id="saveButton" type="submit" class="btn btn-success right">Save</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<div id="closeCaseDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("closeCase", "Case", FormMethod.Post))
+        {
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Warning!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <label for="middle-name" class="control-label">You are about to close this case, Are you sure?</label><br />
+                    <input type="text" name="caseId" id="caseId" hidden value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button id="saveButton" type="submit" class="btn btn-success">Yes</button>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+
+<div id="customerNote" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("addNotes", "Customer", FormMethod.Post))
+        {
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Mr/Ms @Model.Surname Notes</h4>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="id" value="@Model.ID" />
+                    <textarea minlength="20" rows="3" style="width:100%;" name="note" required="required" placeholder="Enter description here...">@Model.Note</textarea>
+                    <input type="text" name="caseId" id="caseId" hidden value="" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>s
+                        <button id="saveButton" type="submit" class="btn btn-success">Save</button>
+                    
+                   
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

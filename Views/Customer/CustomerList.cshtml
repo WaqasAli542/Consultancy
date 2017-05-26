@@ -3,25 +3,41 @@
 }
 @using ConsultancyApp.Models
  <!-- page content -->
-    <div class="col-md-9 col-sm-6 col-xs-12">
+<div class="col-md-9 col-sm-6 col-xs-12">
 <div class="right_col" role="main">
     <div class="">
         <div class="page-title">
             <div class="title_left">
                 <h3>Customers</h3>
             </div>
-        </div>
+            <div class="title_right">
+              
+                <div class="form-group">
+
+                    <label class="control-label" style="color: #3E5266;">Search by Customer Name:</label> &nbsp; &nbsp; &nbsp;
+                    <input type="text" id="customerName" onkeyup="search()" placeholder="Search for names..">
+                    &nbsp; &nbsp; &nbsp;
+                </div>
+                    <div class="form-group">
+                        <label class="control-label .info" style="color: #3E5266;">Search by Date Of Birth:</label>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <label class="control-label .info" style="color: #3E5266;">Search by Post Code:</label><br />
+                        <input type="date" id="dateOfBirth" onchange="search()" placeholder="Search for Starting Date">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input type="text" id="postCode" onkeyup="search()" placeholder="Search for PostCode..">
+                    </div>
+                </div>
 
         <div class="clearfix"></div>
 
 
         <div class="x_content">
 
-            <div class="table-responsive">
+            <div id="myTable" class="table-responsive">
                 <table class="table table-striped jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
                             <th class="column-title">Name </th>
+                            <th class="column-title">DOB</th>
+                            <th class="column-title">Post Code</th>
                             <th class="column-title">Phone </th>
                             <th class="column-title">Email </th>
                             <th class="column-title">No Of Cases </th>
@@ -33,10 +49,12 @@
                             @foreach (Customer i in Model)
                             {
                             <tr>
-                                <td>@i.First_Name @i.Middle_Name @i.Surname</td>
-                                <td>@i.Phone_Mobile</td>
-                                <td>@i.Email</td>
-                                <td>@i.Cases.Count</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'" >@i.First_Name @i.Middle_Name @i.Surname</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'">@i.Date_Of_Birth.ToString("MM-dd-yyyy")</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'">@i.Post_Code</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'" >@i.Phone_Mobile</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'" >@i.Email</td>
+                                <td style="cursor:pointer" onclick="location.href = '@(Url.Action("DisplayCustomer", "Customer", new { customerId = i.ID }))'" >@i.Cases.Count</td>
                                 <td>
                                     @Html.ActionLink("Edit", "editCustomer", new { customerId = i.ID }, new { @class = "btn btn-sm btn-success" })
                                 <a data-toggle="modal" data-id=@i.ID title="Add this item" class="open-deleteCustomerDialog btn btn-sm btn-success" href="#deleteCustomerDialog">Delete</a>
@@ -50,6 +68,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 <div class="col-md-3 col-md-offset-1">
     <h3></h3>
@@ -71,6 +90,49 @@
         $('#deleteCustomerDialog').toggle();
         // $('#addBookDialog').modal('show');
     });
+   
+    function search() {
+        var cName, dob, cPostCode, filter = "", filter1 = "", filter2 = "", splitter, i, table, tr, tdForCus, tdForPostC, tdDob;
+        cName = document.getElementById("customerName");
+        dob = document.getElementById("dateOfBirth");
+        cPostCode = document.getElementById("postCode");
+        filter = cName.value.toUpperCase();
+        filter1 = cPostCode.value.toUpperCase();
+        if (filter.length == 0)
+            filter = " ";
+
+        if (filter1.length == 0)
+            filter1 = "";
+
+        if (isNaN(Date.parse(dob.value))) {
+            filter2 =12;
+        } else {
+            splitter = dob.value.split('-');
+            filter2 = filter2 + parseInt(splitter[1]) + "-";
+            filter2 = filter2 + parseInt(splitter[2]) + "-";
+            filter2 = Date.parse(filter2 + splitter[0]);
+        }
+
+
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            tdForCus = tr[i].getElementsByTagName("td")[0];
+            tdDob=tr[i].getElementsByTagName("td")[1];
+            tdForPostC = tr[i].getElementsByTagName("td")[2];
+            if (tdForCus) {
+                var test=Date.parse(tdDob.innerHTML);
+             
+                if (tdForCus.innerHTML.toUpperCase().indexOf(filter) > -1  && tdForPostC.innerHTML.toUpperCase().indexOf(filter1) > -1 && (filter2 == 12 || Date.parse(tdDob.innerHTML) == filter2)) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                
+            }
+        }
+    }
 </script>
 
 <div id="deleteCustomerDialog" class="modal fade" role="dialog">
@@ -81,11 +143,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Warning!!</h4>
+                    <h4 class="modal-title">Warning !</h4>
                 </div>
 
                 <div class="modal-body">
-                    <label for="middle-name" class="control-label">Are you sure? You want to delete this customer.</label><br />
+                    <label for="middle-name" class="control-label">You are about to delete a customer record, Are you sure?</label><br />
                     <input type="text" name="customerId" id="customerId" hidden value="" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

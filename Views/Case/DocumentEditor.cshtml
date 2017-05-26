@@ -23,6 +23,7 @@
         <form action="saveCaseDocument" method="post">
             @Html.HiddenFor(m => m.Case_ID)
             @Html.HiddenFor(m => m.Case_Document_Type_ID)
+            @Html.HiddenFor(m=>m.ID)
             @Html.HiddenFor(m => m.IsUploaded)
             <textarea name="textarea" class="jqte-test" cols="100" rows="100" >@Model.Text</textarea><br />
             <input type="submit" class="btn btn-sm btn-success text-right" name="command" value="Save" style="background-color: #395A80;"  />

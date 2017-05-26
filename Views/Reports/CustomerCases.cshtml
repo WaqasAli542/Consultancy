@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Customer Case List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="right_col" role="main">
+    <div class="col-md-12">
+        <div class="page-title">
+            <div class="title_left">
+                <h4>Customer Case List </h4>
+            </div>
+        </div>
+    </div>
+    <form action="CustomerCaseList" method="post">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-3">
+                <label class="control-label" style="font-weight:bolder; font-size:30px;">All</label>
+                <div class="col-md-2">
+                    <input type="checkbox" name="All" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4" style="background-color:grey;">
+                <h4 style="color:white;"><strong>Search by Date:</strong></h4>
+                <div class="form-group form-inline">
+                    To:<input type="date" name="startingDate" class="form-control" />
+                    From:<input type="date" name="endingDate" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-offset-7">
+                <input type="submit" value="Generate" class="btn btn-success btn-lg">
+            </div>
+        </div>
+    </form>
+</div>
+

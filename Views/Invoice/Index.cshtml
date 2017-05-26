@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model ConsultancyApp.Models.Case
+@using ConsultancyApp.Models
+
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <p><strong>Status:</strong><strong style="color:red">@Model.Invoice.Status</strong></p>
+            </div>
+            <div class="title_right">
+                <div class="col-md-offset-6 col-md-5 col-sm-6 col-xs-12">
+                    <div class="form-group btn-group">
+                        @Html.ActionLink("Payment", "Payment", new { caseID = @Model.ID }, new { @class = "btn btn-sm btn-success" })
+                        @Html.ActionLink("Print", "printDocument", "Case", new { caseId = Model.ID }, new { @class = "btn btn-sm btn-success" })
+               </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-offset-3 col-md-5 col-sm-6 col-xs-12">
+            <h1>Invoice</h1><br/><br/>
+        </div>
+        <div class="container">
+        <div class="col-md-7 col-sm-6 col-xs-12">
+            <div class="x_content">
+                <div class="col-md-offset-10 col-md-1 col-sm-3 col-xs-3">
+                    <img height="50px" width="50dp" src="@Model.Client_Staff.Client.Company_Logo" />
+                </div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-2 col-sm-3 col-xs-3">
+                    <p><strong>   Bill To:</strong></p>
+                    <p><strong>@Model.Customer.First_Name @Model.Customer.Middle_Name</strong> <br/>@Model.Customer.Address</p>
+                </div>
+                <div class="col-md-offset-8 col-md-2 col-sm-3 col-xs-3">
+                    <p><strong> @Model.Client_Staff.Client.Business_Name </strong><br/> @Model.Client_Staff.Client.Address</p>
+                </div>
+            </div>  
+            <div class="x_content">
+                <div class="col-md-2 col-sm-3 col-xs-3">
+                    <p><strong> # inv-@Model.Invoice_ID</strong></p>
+                </div>
+            </div>  
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <p><strong>Invoice Date:@Model.Starting_Date.Value.ToString("MM/dd/yyyy")</strong></p>
+                </div>
+            </div> 
+        </div>
+
+
+           @{
+               var total = 0.0;
+           }
+            <div id="Checked" class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title">Item Details </th>
+                                    @if(Model.Invoice.IsVAT==1)
+                                    {
+                                         <th class="column-title">VAT </th> 
+                                    }
+                                  
+                                    <th class="column-title">Amount </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Legal Service for CaseRef: @Model.Displayable_ID/Client:@Model.Client_Staff_ID</td>
+                                    @if (Model.Invoice.IsVAT == 1)
+                                    {
+                                        var VAT = Model.Invoice.Price * .20;
+                                        total = VAT + Model.Invoice.Price;
+
+                                        <td>@Model.Invoice.Currency_Symbol @VAT</td>
+                                    }
+                                    else
+                                    {
+                                        total = Model.Invoice.Price; 
+                                    }
+                                    <td>@Model.Invoice.Currency_Symbol @Model.Invoice.Price</td>
+                                </tr>
+                             </tbody>
+                           
+                        </table>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-offset-9 col-md-2 col-sm-3 col-xs-3">
+                        <p><strong> Total= @Model.Invoice.Currency_Symbol @total</strong></p>
+                    </div>
+                </div>
+                </div>
+
+
+            
+            </div>
+        </div>
+    </div>
+

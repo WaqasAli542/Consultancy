@@ -27,6 +27,9 @@ color: #4A4A4A;
    </style>
 
 <script type="text/javascript">
+    function form_submit() {
+        document.getElementById("printForm").submit();
+    }
     function CapitalLetter (string) {
         string = string.replace(/([a-z])([A-Z])/g, '$1 $2');
         string = string.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
@@ -43,12 +46,10 @@ color: #4A4A4A;
             <div class="title_right">
                 <div class="col-md-offset-6 col-md-5 col-sm-6 col-xs-12">
                     <div class="form-group btn-group">
-                        <button class="btn btn-sm btn-success"><a href="#">Print Case</a></button>
-                        <button class="btn btn-sm btn-success"><a href="#">Invoice</a></button>
-                        @{
-                            if (@Model.Ending_Date == null)
-                            {
-                                  <a data-toggle="modal" data-id=@Model.ID title="Add this item" class="open-closeCasDialog btn btn-sm btn-success" href="#closeCaseDialog">Close Case</a>  
+                        <input type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#printableDocuments" value="Print" />
+                                  @Html.ActionLink("Invoice", "../Invoice/", new { caseID = @Model.ID }, new { @class = "btn btn-sm btn-success" })
+                               @{ 
+                                   if (@Model.Ending_Date == null) { <a data-toggle="modal" data-id=@Model.ID title="Add this item" class="open-closeCasDialog btn btn-sm btn-success" href="#closeCaseDialog">Close Case</a>  
                             }
                             else
                             {
@@ -94,6 +95,17 @@ color: #4A4A4A;
                     <div class="col-md-8 col-sm-8 col-xs-8">
                         <p><strong>@Model.Starting_Date.Value.ToString("MM/dd/yyyy")</strong></p>
                     </div><br />
+                    @{
+                            if (@Model.Ending_Date != null)
+                            {
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <p><strong>Closing Date:</strong> </p>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <p><strong>@Model.Ending_Date.Value.ToString("MM/dd/yyyy")</strong></p>
+                    </div><br />
+}
+                    }
                     <div class="col-md-3 col-sm-3 col-xs-3">
                         <p><strong>Customer:</strong> </p>
                     </div>
@@ -134,11 +146,13 @@ color: #4A4A4A;
                         <p><strong>Fees:   </strong></p>
                     </div>
                     <div class="col-md-8 col-sm-8 col-xs-8">
-                        <p><strong>$ 2000</strong></p>
+                        <p><strong>@Model.Invoice.Currency_Symbol @Model.Invoice.Price</strong></p>
                     </div><br />
                 </div>
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <button class="btn btn-sm btn-success fa fa-balance-scale" data-toggle="modal" data-target="#caseNote" value="Case Note"> Case Note</button> 
+                </div>
             </div>
-
             <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12">
                 <div class="panel ">
                     <div class="panel-heading " style="background-color: #EBF6FD;">
@@ -146,11 +160,50 @@ color: #4A4A4A;
 
                     </div>
                     <div class="panel-body text-center" style="background-color: #EBF6FD; text-align:left; text-decoration:underline; padding-left:40px">
-                        @Html.ActionLink("Generate Opening Statement", "displayDocumentEditor", new { documentTypeID = 1, caseID = Model.ID }, new { target = "_blank" })<br />
-                        @Html.ActionLink("Generate Authority Letter", "displayDocumentEditor", new { documentTypeID = 2, caseID = Model.ID }, null)<br />
-                        @Html.ActionLink("Generate Closing Statement", "displayDocumentEditor", new { documentTypeID = 3, caseID = Model.ID }, null)<br />
-                        @Html.ActionLink("Generate Client Care Letter", "displayDocumentEditor", new { documentTypeID = 4, caseID = Model.ID }, null)<br />
-                    </div>
+ 
+                        @Html.ActionLink("Generate Opening Statement  ", "displayDocumentEditor", new { documentTypeID = 1, caseID = Model.ID }, new { target = "_blank" }) &nbsp;
+                            @if(Model.Case_Document.FirstOrDefault(type=>type.Case_Document_Type_ID==1).isGenerated==1)
+                            {   <img src="~/Content/Images/tick.png" style="margin-top: -5px; margin-left: 20px; width: 15px; height: 15px;" /><br />
+                            }
+                            else
+                            {
+                                <img src="~/Content/Images/cross.png" style="margin-top:-5px;margin-left:20px;width:15px;height:15px;" /><br />
+          
+                            }
+                        
+                         @Html.ActionLink("Generate Authority Letter", "displayDocumentEditor", new { documentTypeID = 2, caseID = Model.ID }, new { target = "_blank" }) &nbsp;
+                       
+                         @if (Model.Case_Document.FirstOrDefault(type => type.Case_Document_Type_ID == 2).isGenerated == 1)
+                        {   <img src="~/Content/Images/tick.png" style="margin-top: -5px; margin-left: 20px; width: 15px; height: 15px;" /><br />
+                        }
+                        else
+                        {
+                            <img src="~/Content/Images/cross.png" style="margin-top:-5px;margin-left:20px;width:15px;height:15px;" /><br />
+
+                        }
+
+                       @Html.ActionLink("Generate Closing Statement", "displayDocumentEditor", new { documentTypeID = 3, caseID = Model.ID }, new { target = "_blank" })
+                        
+                        @if (Model.Case_Document.FirstOrDefault(type => type.Case_Document_Type_ID == 3).isGenerated == 1)
+                        {   <img src="~/Content/Images/tick.png" style="margin-top: -5px; margin-left: 20px; width: 15px; height: 15px;" /><br />
+                        }
+                        else
+                        {
+                            <img src="~/Content/Images/cross.png" style="margin-top:-5px;margin-left:20px;width:15px;height:15px;" /><br />
+
+                        }
+ 
+                        @Html.ActionLink("Generate Client Care Letter", "displayDocumentEditor", new { documentTypeID = 4, caseID = Model.ID }, new { target = "_blank" })
+                       
+                         @if (Model.Case_Document.FirstOrDefault(type => type.Case_Document_Type_ID == 4).isGenerated == 1)
+                        {   <img src="~/Content/Images/tick.png" style="margin-top: -5px; margin-left: 20px; width: 15px; height: 15px;" /><br />
+                        }
+                        else
+                        {
+                            <img src="~/Content/Images/cross.png" style="margin-top:-5px;margin-left:20px;width:20px;height:10px;" /><br />
+
+                        }
+   </div>
                 </div>
                 <div class="panel ">
                     <div class="panel-heading " style="background-color: #EBF6FD;">
@@ -168,6 +221,16 @@ color: #4A4A4A;
                                     @Html.ActionLink(caseDoc.Case_Document_Type.Type, "displayCaseDocument", new { caseDocumentID = caseDoc.ID }, new { target = "_blank" })<br />
                                 }
                             }
+                            //Case General Documents
+                              foreach (var generalDoc in @Model.GeneralCaseDocuments)
+                            {
+                                
+
+                                    @Html.ActionLink(generalDoc.Name, "displayCaseGeneralDocument", new { caseDocumentID = generalDoc.Id }, new { target = "_blank" })<br />
+                                
+                            }
+                            
+                            
                             //Attendence note documents
                            
                             foreach (Case_Note cusCase in Model.Case_Note.Where(cas => cas.Case_ID == Model.ID))
@@ -226,7 +289,15 @@ color: #4A4A4A;
                                         <div class="container">
 
                                             <button type="button" class="btn1 btn-md btn-success collapsed" style="" data-toggle="collapse" data-target="#collape_@cusCase.ID">
-                                                @cusCase.Note_Type.Name &nbsp;&nbsp; @cusCase.Date.ToString("MM/dd/yyyy") 
+                                                @{
+                                        int no = 60 - @cusCase.Note_Type.Name.Length;
+                                                }@cusCase.Note_Type.Name 
+                                                @for (int i = 0; i < no;i++ )
+                                                {
+                                                    @: &nbsp;
+                                                }
+
+                                                    &nbsp;&nbsp; @cusCase.Date.ToString("MM/dd/yyyy") 
                                             </button>
                                             <div id="collape_@cusCase.ID" class="collapse">
                                                 <ul class="list-group">
@@ -238,12 +309,12 @@ color: #4A4A4A;
                                                          foreach (Customer_Case_Note_Document document in cusCase.Customer_Case_Note_Document.Where(cas => cas.Note_ID == cusCase.ID))
                                                              {
 
-                                                             <li class="list-group-item"> Link: <u>@Html.ActionLink(document.Name, "displayNoteDocument", new { caseNoteID = document.ID, caseId = @Model.ID }, null)</u> </li>
+                                                             <li class="list-group-item"> Attached Documents: <u>@Html.ActionLink(document.Name, "displayNoteDocument", new { caseNoteID = document.ID, caseId = @Model.ID }, null)</u> </li>
                                                             }
                                                          }
                                                     <li class="list-group-item">
                                                         Actions: &ensp;&ensp;&ensp; @Html.ActionLink("Edit", "editCaseNote", new { caseNoteId = cusCase.ID, caseId = cusCase.Case_ID }, new { @class = "btn btn-sm btn-success right" })
-                                                        &ensp;&ensp;&ensp;<a data-toggle="modal" data-id=@cusCase.ID title="Add this item" class="open-deleteCaseNoteDialog btn btn-sm btn-success" href="#deleteCaseNoteDialog">Delete</a>
+                                                       &ensp;<a data-toggle="modal" data-id=@cusCase.ID title="Add this item" class="open-deleteCaseNoteDialog btn btn-sm btn-success" href="#deleteCaseNoteDialog">Delete</a>
                                                        
                                                     </li>
                                                 </ul>
@@ -317,7 +388,7 @@ color: #4A4A4A;
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Upload Document</h4>
+                        <h4 class="modal-title">Upload Document (.png, .Jpg, .pdf)</h4>
                     </div>
 
                     <div class="modal-body">
@@ -375,6 +446,125 @@ color: #4A4A4A;
         </div>
     </div>
 
+
+        <div id="caseNote" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                @using (Html.BeginForm("AddNoteToDatabase", "Case", FormMethod.Post))
+                {
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Case Note</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="middle-name" class="control-label">Edit your case note</label><br />
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <label class=" active">
+                                        <textarea name="Note" rows="4" cols="560" style="margin:0px;width:562px;height:98px;">@Model.Note</textarea>
+                                    </label>
+                                </div>
+
+                                <br />
+                                @Html.HiddenFor(m => m.ID)
+                                <br />
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default right" data-dismiss="modal">Close</button>
+                                    <button id="saveButton" type="submit" class="btn btn-success right">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <div id="printableDocuments" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <form action="printCase" id="printForm" method="post">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Print Case</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <label for="middle-name" class="control-label">Select Document</label><br />
+                            <div class="row">
+                                @{
+                                    List<Case_Document> casedocuments = Model.Case_Document.ToList();
+                                }
+                                @if(casedocuments.ElementAt(1).isGenerated==1)
+                                {
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <label class=" active">
+                                        <input type="checkbox" name="authoirtyLetter" value="AuthorityLetter" autocomplete="off"> Authority Letter
+                                    </label>
+                                </div>
+                                }
+                                @if(casedocuments.ElementAt(0).isGenerated==1)
+                                {
+                                      <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <label class="">
+                                        <input type="checkbox" name="openingStatement" value="OpeningStatement" autocomplete="off"> Opening Statement
+                                    </label><br />
+                                </div>
+                                }
+                              @if(casedocuments.ElementAt(3).isGenerated==1)
+                                {
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                     <label class=" active">
+                                        <input type="checkbox" name="clientCareLetter" value="ClientCareLetter" autocomplete="off"> Client Care Letter
+                                    </label>
+
+                                </div>
+                              }
+                                @if(casedocuments.ElementAt(2).isGenerated==1)
+                                {
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                     <label class=" active">
+                                        <input type="checkbox" name="closingStatement" value="ClosingStatement" autocomplete="off"> Closing Statement
+                                    </label>
+
+                                </div>
+                                }
+                                <div class="col-md-6 col-xs-6 col-sm-6">
+                                    <label class="">
+                                        <input type="checkbox" name="notesIncluded" value="Others" autocomplete="off"> Attendence Notes
+                                    </label><br />
+                                </div>
+                            </div>
+
+                            <br />
+
+
+                            <input type="hidden" name="caseId" value="@Model.ID" /><br />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default right" data-dismiss="modal">Close</button>
+                                <input type="submit" onclick="form_submit()"  class=" btn btn-success right" value="Generate" data-dismiss="modal" />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
    </div>   
 
 <div id="closeCaseDialog" class="modal fade" role="dialog">
@@ -402,3 +592,6 @@ color: #4A4A4A;
         }
     </div>
 </div>
+
+
+

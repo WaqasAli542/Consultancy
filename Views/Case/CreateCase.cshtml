@@ -2,6 +2,8 @@
     ViewBag.Title = "CreateCase";
 }
 @model ConsultancyApp.Models.Case
+
+
 <script src="~/Scripts/countries3.js"></script>
 <script type="text/javascript">
     function test() {
@@ -20,6 +22,10 @@
     }  
 </script>
 
+
+    @{
+bool check=false;
+}
 
 <div class="right_col" role="main">
     <div class="">
@@ -47,11 +53,26 @@
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select name="Customer_ID" id="Customer_ID" onchange="test()" class="selectpicker form-control " required="required">
-                                    <option class="active" selected disabled value="">Customer Name</option>
-
+                                 @if(ViewBag.SelectedCustomer != null )
+                                    {
+                                    <option class="active" selected value="@ViewBag.SelectedCustomer.ID">@ViewBag.SelectedCustomer.First_Name</option>
+                                    }
+                                    else
+                                    {
+                                       <option class="active" selected disabled value="">Customer Name</option>
+                                 }
                                     @foreach (var customer in ViewBag.Customer)
                                     {
-                                        <option value="@customer.ID">@customer.First_Name</option>
+                                        if (ViewBag.SelectedCustomer != null) { 
+                                        if(ViewBag.SelectedCustomer.ID != customer.ID){
+                                        
+                                        <option value="@customer.ID">"@customer.First_Name @customer.Middle_Name @customer.Surname - @customer.Date_Of_Birth" </option>
+                                        }
+                                        }
+                                        else
+                                        {
+                                             <option value="@customer.ID">"@customer.First_Name @customer.Middle_Name @customer.Surname - @customer.Date_Of_Birth" </option>
+                                        }
                                     }
 
                                 </select>
@@ -59,7 +80,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> Starting Date<span class="required">*</span></label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Case Starting Date</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="date" class="form-control col-md-7 col-xs-12" type="date" name="Starting_Date" required="required">
                             </div>
@@ -67,9 +88,20 @@
 
                        
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nationality<span class="required">*</span></label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nationality</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
+                         @if (ViewBag.SelectedCustomer != null)
+                         {
+                             if(check==false)
+                             {
+                                  <input type="text" required="required" class="form-control" id="nationality" name="nationality" value="@ViewBag.SelectedCustomer.Country_Of_Nationality" readonly />
+                                 check = true;  
+                         }
+                         
+                         }
+                         else { 
                                 <input type="text" required="required" class="form-control" id="nationality" name="nationality" readonly />
+                         }
                             </div>
                             <script language="javascript">print_country("nationality");</script>
                         </div>
@@ -90,33 +122,38 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Case Details<span class="required">*</span></label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Case Details</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea id="middle-name" class="form-control col-md-7 col-xs-12" minlength="20" rows="6" name="case_Detail" required="required"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Advice<span class="required">*</span></label>
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Advice</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <textarea id="middle-name" class="form-control col-md-7 col-xs-12" minlength="20" rows="6" name="advice" required="required"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fees<span class="required">*</span></label>
-                            <div class="col-md-4 col-sm-3 col-xs-12">
-                                <input id="middle-name" class="form-control col-md-7 col-xs-12" oninput="this.value=this.value.replace(/[^0-9]/g,'');" pattern=".{1,}" type="text" name="price" required="required">
+                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Fees</label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <input id="middle-name" class="form-control col-md-7 col-xs-12" min="0" value="0" step="0.1" pattern="^\d+(?:\.\d{1,2})?$" type="number" name="Price" required="required">
                             </div>
-                            <div class="col-md-2 col-sm-3 col-xs-12">
-                                <select required="required" class="selectpicker form-control ">
-                                    <option class="active" selected disabled value="">Currency Type</option>
-                                    <option>Dollar</option>
-                                    <option>euro</option>
-                                    <option>CAD</option>
-                                    <option>GBP</option>
-                                    <option>AUD</option>
-                                </select>
+                            <div class="col-md-1 col-sm-3 col-xs-12">
+                                <label>
+                                    <input type="checkbox" name="VATOperations" autocomplete="off"> Include VAT
+                                </label>&nbsp;
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-12">
+                                    <select required="required" name="Currency" class="selectpicker form-control ">
+                                        <option class="active" selected disabled value="">Currency Type</option>
+                                        <option value="USD,$">USD</option>
+                                        <option value="Euro,€">EURO</option>
+                                        <option value="CAD,$">CAD</option>
+                                        <option value="GBP,£">GBP</option>
+                                        <option value="AUD,A$">AUD</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
 
                         <div class="ln_solid"></div>

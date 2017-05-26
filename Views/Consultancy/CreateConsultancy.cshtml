@@ -33,7 +33,7 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        <form id="demo-form2" method="post" action="../Consultancy/processConsultancy" data-parsley-validate class="form-horizontal form-label-left">
+                        <form id="demo-form2" method="post" target="_blank" action="../Consultancy/processConsultancy" data-parsley-validate class="form-horizontal form-label-left">
 
 
                             <div class="form-group">
@@ -57,34 +57,34 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-3 col-sm-6 col-xs-12">
-                                    <p>Not Customer? <a href="#">Create Customer</a></p>
+                                    <p>Not Customer? @Html.ActionLink("Create Customer", "../Customer/createCustomer",null,null);</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Date<span class="required">*</span></label>
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input id="middle-name" class="form-control col-md-7 col-xs-12" required="required" type="date" name="Date">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Period<span class="required">*</span></label>
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Duration (Hrs)</label>
                                 <div class="col-md-5 col-sm-5 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" required="required" oninput="this.value=this.value.replace(/[^0-9]/g,'');" pattern=".{1,16}" type="text" name="Period">
+                                    <input id="middle-name" type="number" class="form-control col-md-7 col-xs-12" required="required" min="0" value="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" name="Period">
                                 </div>
                                 <div class="col-md-1 col-sm-1 col-xs-12">
-                                    <p><strong> Hours</strong></p>
+                                    <p><strong> </strong></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Price<span class="required">*</span></label>
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
                                 <div class="col-md-4 col-sm-3 col-xs-12">
-                                    <input id="middle-name" class="form-control col-md-7 col-xs-12" required="required" oninput="this.value=this.value.replace(/[^0-9]/g,'');" pattern=".{1,16}" type="text" name="_price">
-                                </div>
+                                    <input type="number" class="form-control col-md-7 col-xs-12"  required="required" id="middle-name" min="0" value="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" name="_price" />
+                                   </div>
                                 <div class="col-md-2 col-sm-3 col-xs-12">
                                     <select class="selectpicker form-control " required="required" name="_currency">
                                         <option class="active" selected disabled value="">Currency Type</option>
-                                        <option>Dollar</option>
-                                        <option>euro</option>
+                                        <option>USD</option>
+                                        <option>EURO</option>
                                         <option>CAD</option>
                                         <option>GBP</option>
                                         <option>AUD</option>
@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right" >
                                    
-                                    <input type="submit" class="btn btn-sm btn-success" name="_command" value="Preview" />
+                                    <input type="submit"  class="btn btn-sm btn-success"  name="_command" value="Preview" />
                                     <input type="submit" class="btn btn-sm btn-success" name="_command" value="Save & Upload" />
 
                                 </div>

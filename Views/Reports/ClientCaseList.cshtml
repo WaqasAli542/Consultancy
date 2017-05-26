@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "ClientCaseList";
+}
+@using ConsultancyApp.Models
+
+<script src="~/Scripts/loadingoverlay_progress.min.js"></script>
+<script src="~/Scripts/loadingoverlay.min.js"></script>
+
+<div class="right_col" role="main">
+    <div class="col-md-9">
+        <div class="page-title">
+            <div class="title_left ">
+                <h4> Case List </h4>
+                
+            </div>
+            <div class="title_right">
+             @{
+                 List<Case> cas=ViewBag.list;
+               
+             }
+             
+                @Html.ActionLink("Print", "../Reports/PrintList", new { cases = cas, x = 1 }, new { @class = "btn btn-sm btn-success pull-right", @id = "print" }) 
+             </div>
+            </div>
+    </div>
+   
+    <div class="">
+        @{
+            Boolean isAdmin = false;
+            string advisor = "";
+            Client_Staff c = (Client_Staff)System.Web.HttpContext.Current.Session["PresentId"];
+            if (c != null)
+            {
+                advisor = c.First_Name + " " + c.Middle_Name + " " + c.Surname;
+                if (c.Role.ToUpper().Equals("ADMIN"))
+                {
+                    isAdmin = true;
+                }
+            }
+        }
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-9 col-sm-6 col-xs-12">
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title">Case Ref </th>
+                                    <th class="column-title">Customer Name </th>
+                                    <th class="column-title">Status </th>
+                                    <th class="column-title">Opening Date </th>
+                                    <th class="column-title">Closing Date </th>
+                                    @if (isAdmin)
+                                    {
+                                        <th class="column-title">Advisor </th>
+                                    }
+                                    <th class="column-title">No of Documents </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Case i in Model)
+                                {
+
+                                    <tr>
+
+                                        <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Displayable_ID</td>
+                                        <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Customer.First_Name @i.Customer.Middle_Name @i.Customer.Surname</td>
+                                        @{ if (i.Ending_Date == null)
+                                         {
+                                            <td>Open</td>
+
+                                         }
+                                         else
+                                         {
+                                            <td>Closed</td>
+                                         }
+                                        }
+                                        <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Starting_Date</td>
+                                        <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Ending_Date</td>
+                                        @if (isAdmin)
+                                        {
+                                            <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@advisor</td>
+                                        }
+                                        <td style="cursor:pointer" onclick="location.href = '@(Url.Action("displayCase", "Case", new { caseId = i.ID }))'">@i.Case_Document.Count</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#print").click(function () {
+            $(this).hide();
+        });
+    });
+</script>

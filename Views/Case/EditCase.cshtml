@@ -47,53 +47,55 @@
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayed">
-                                Select Customer <span class="required">*</span>
+                                Select Customer 
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select name="Customer_ID" id="Customer_ID" onchange="test()" class="selectpicker form-control " required="required">
-                                    <option class="active" selected disabled value="@Model.Customer_ID">@Model.Customer.First_Name</option>
-
-                                    @foreach (var customer in ViewBag.Customer)
-                                    {
-                                        <option value="@customer.ID">@customer.First_Name</option>
-                                    }
-
-                                </select>
+                                <select name="Customer_ID" id="Customer_ID" onchange="test()" class="selectpicker form-control ">
+                                    <option class="active" selected value="@Model.Customer_ID">@Model.Customer.First_Name</option>
+                            @foreach (var item in ViewBag.Customer)
+                            {
+                                 <option  value="@item.ID">@item.First_Name</option> 
+                            }
+                                                            </select>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> Starting Date</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="date" value="@ViewBag.startingdate" class="form-control col-md-7 col-xs-12" type="date" name="Starting_Date" required="required">
+                                <input id="date" value=@ViewBag.startingdate class="form-control col-md-7 col-xs-12" type="date" name="Starting_Date" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> Ending Date </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="date" value="@ViewBag.endingDate" class="form-control col-md-7 col-xs-12" type="date" name="Ending_Date" required="required">
+                                <input value="@ViewBag.endingDate" class="form-control col-md-7 col-xs-12" type="date" name="Ending_Date" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Nationality</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" value=@Model.Customer.Country_Of_Nationality required="required" class="form-control" id="nationality" name="nationality" readonly />
+                                <input type="text" value=@Model.Customer.Country_Of_Nationality  class="form-control" id="nationality" name="nationality" readonly />
                             </div>
                             <script language="javascript">print_country("nationality");</script>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="displayed">
-                                Case Type <span class="required">*</span>
+                                Case Type 
                             </label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select required="required" name="Case_Type_ID" class="selectpicker form-control ">
-                                    <option selected disabled value="@Model.Case_Type_ID" class="active">@Model.Case_Type.Type</option>
-                                    @foreach (var casetype in ViewBag.caseType)
-                                    {
-                                        <option value="@casetype.ID">@casetype.Type</option>
-                                    }
+                                    <option selected  value="@Model.Case_Type_ID" class="active">@Model.Case_Type.Type</option>
+
+                          @foreach (var item in ViewBag.caseTypes)
+                          {
+                              if(item.Type != Model.Case_Type.Type)
+                              {
+                                       <option selected  value="@item.ID" class="active">@item.Type</option>
+                              }
+                          }
 
                                 </select>
                             </div>
@@ -116,13 +118,14 @@
                                 <input id="middle-name" class="form-control col-md-7 col-xs-12" value="2000" oninput="this.value=this.value.replace(/[^0-9]/g,'');" pattern=".{1,}" type="text" name="price" required="required">
                             </div>
                             <div class="col-md-2 col-sm-3 col-xs-12">
-                                <select required="required" class="selectpicker form-control ">
-                                    <option class="active" selected disabled value="">Dollar</option>
-    
-                                    <option>euro</option>
-                                    <option>CAD</option>
-                                    <option>GBP</option>
-                                    <option>AUD</option>
+                                <select  class="selectpicker form-control ">
+                       
+                                    <option class="active" selected disabled value=""> Change Currency Type</option>
+                                    <option value="USD,$">USD</option>
+                                    <option value="Euro,€">EURO</option>
+                                    <option value="CAD,$">CAD</option>
+                                    <option value="GBP,£">GBP</option>
+                                    <option value="AUD,A$">AUD</option>
                                 </select>
                             </div>
                         </div>
@@ -136,6 +139,7 @@
                         <div class="ln_solid"></div>
                         <div class="">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
+                                @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-sm btn-default" })
                                 <button type="submit" class="btn btn-sm btn-success ">Save Case</button>
                             </div>
                         </div>

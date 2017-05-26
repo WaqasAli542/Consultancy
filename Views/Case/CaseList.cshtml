@@ -29,7 +29,7 @@
                     <select id="status" onchange="search()">
                         <option class="active">All</option>
                         <option>Open</option>
-                        <option>Close</option>
+                        <option>Closed</option>
                     </select>
                 </div>
                 
@@ -110,9 +110,8 @@
         });
        
         //Search
-        //Search
         function search() {
-            var startingD, endingD, cName, status, splitterForS, splitterForE, filter1 = "", filter = "", filter2="", filter3="", table, tr, tdForStart, tdForEnd, tdForCus, tdForStatus, i;
+            var startingD, endingD, cName, status, splitterForS, splitterForE, filter1 = "", filter = "", filter2, filter3, table, tr, tdForStart, tdForEnd, tdForCus, tdForStatus, i;
 
             startingD = document.getElementById("startingDate");
             endingD = document.getElementById("endingDate");
@@ -168,7 +167,6 @@
             }
         }
 
-
     </script>
 
 </div>
@@ -182,11 +180,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Warning!!</h4>
+                <h4 class="modal-title">Warning!</h4>
             </div>
 
             <div class="modal-body">
-                <label for="middle-name" class="control-label">Are you sure? You want to delete this case.</label><br />
+                <label for="middle-name" class="control-label">You are about to delete a case record, Are you sure?</label><br />
                 <input type="text" name="caseId" id="caseId" hidden value="" />
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
