@@ -45,8 +45,7 @@
                     <div class="form-group btn-group">
               
                         @Html.ActionLink("Edit Customer", "editCustomer", new { customerId = @Model.ID }, new { @class = "btn btn-sm btn-success" })
-                        &ensp;<a data-toggle="modal" data-id=1 title="Add this item" class="open-deleteCaseNoteDialog btn btn-sm btn-success" href="#customerNote">Customer Note</a>
-
+                       
                     </div>
                 </div>
             </div>
@@ -365,32 +364,3 @@
     </div>
 </div>
 
-
-<div id="customerNote" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        @using (Html.BeginForm("addNotes", "Customer", FormMethod.Post))
-        {
-        <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Mr/Ms @Model.Surname Notes</h4>
-                </div>
-
-                <div class="modal-body">
-                    <input type="hidden" name="id" value="@Model.ID" />
-                    <textarea minlength="20" rows="3" style="width:100%;" name="note" required="required" placeholder="Enter description here...">@Model.Note</textarea>
-                    <input type="text" name="caseId" id="caseId" hidden value="" />
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>s
-                        <button id="saveButton" type="submit" class="btn btn-success">Save</button>
-                    
-                   
-
-                    </div>
-                </div>
-
-            </div>
-        }
-    </div>
-</div>
